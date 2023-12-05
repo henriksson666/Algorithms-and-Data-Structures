@@ -37,3 +37,43 @@ public class StealPack { // StealPack class
         scanner.close(); // close scanner
     } // end main
 } // end StealPack class
+
+/*
+ * beecrowd | 2675
+ * Steal Pack
+ * By Hamilton José Brumatto, UESC BR Brazil
+ * 
+ * Timelimit: 1
+ * The single-child difficulty (especially before the advent of video games) is
+ * playing alone, so patience games have emerged. One of them is the Steal Pack
+ * that Dr. Silvano Barbosa de Campos invented to play with N cards numbered
+ * from 1 to N. You get these cards shuffled, and you must take one by one and
+ * put them in a pack, but can only put a card on the pack, if the card at the
+ * top of the pack is smaller than this one, otherwise you will steal cards
+ * until you find a smaller one. In the end your score is the sum of the cards
+ * you stole. As this game was tiring, you were asked to have an algorithm that,
+ * given the sequence of cards, indicates the sum you have stolen.
+ * 
+ * Input
+ * The input contains several test cases, each test case contains two lines, in
+ * the first the number N (0 < N ≤ 105) (90% of the input cases are 0 < N ≤
+ * 1,000) indicating the number of cards. In the second line N values, numbered
+ * from 1 to N in any order. The test cases ends with the end of the input.
+ * 
+ * Output
+ * It should be printed, for each test case, a value indicating the sum you will
+ * receive at the end of the game on a single line.
+ * 
+ * Input Sample
+ * 5
+ * 3 2 5 1 4
+ * 5
+ * 1 2 3 4 5
+ * 3
+ * 3 2 1
+ * 
+ * Output Sample
+ * 10
+ * 0
+ * 5
+ */
