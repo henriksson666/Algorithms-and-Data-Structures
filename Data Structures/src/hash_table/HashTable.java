@@ -4,45 +4,47 @@
  * beecrowd | 1256 Hash Tables
  */
 
-package hash_table;
+package hash_table; // package declaration is mandatory
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.Arrays;
+import java.io.BufferedReader; // import BufferedReader class
+import java.io.IOException; // import IOException class
+import java.io.InputStreamReader; // import InputStreamReader class
+import java.io.PrintWriter; // import PrintWriter class
+import java.util.Arrays; // import Arrays class
 
-public class HashTable {
+public class HashTable { // HashTable class declaration
 
-    static BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
-    static PrintWriter outputWriter = new PrintWriter(System.out);
+    static BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in)); // instantiate
+                                                                                               // BufferedReader
+                                                                                               // object
+    static PrintWriter outputWriter = new PrintWriter(System.out); // instantiate PrintWriter object
 
-    public static void main(String[] args) throws IOException {
-        int testCases = readInt();
+    public static void main(String[] args) throws IOException { // main method declaration
+        int testCases = readInt(); // read number of test cases
 
-        while (testCases-- > 0) {
-            int[] parameters = readIntArray();
-            int size = parameters[0];
-            String[] hashTable = new String[size];
-            Arrays.fill(hashTable, "");
+        while (testCases-- > 0) { // loop through test cases
+            int[] parameters = readIntArray(); // read parameters
+            int size = parameters[0]; // read size
+            String[] hashTable = new String[size]; // instantiate hash table
+            Arrays.fill(hashTable, ""); // fill hash table with empty strings
 
-            String[] elements = readLine().split("\\s");
-            for (String element : elements) {
-                int index = toInt(element) % size;
-                hashTable[index] += " -> " + element;
-            }
+            String[] elements = readLine().split("\\s"); // read elements
+            for (String element : elements) { // loop through elements
+                int index = toInt(element) % size; // calculate index
+                hashTable[index] += " -> " + element; // add element to hash table
+            } // end of loop through elements
 
-            for (int i = 0; i < size; i++) {
-                outputWriter.println(i + hashTable[i] + " -> \\");
-            }
+            for (int i = 0; i < size; i++) { // loop through hash table
+                outputWriter.println(i + hashTable[i] + " -> \\"); // print hash table
+            } // end of loop through hash table
 
-            if (testCases != 0) {
-                outputWriter.println();
-            }
-        }
+            if (testCases != 0) { // if it is not the last test case
+                outputWriter.println(); // print blank line
+            } // end of if
+        } // end of loop through test cases
 
         outputWriter.close();
-    }
+    } // end of main method
 
     private static String readLine() throws IOException {
         return inputReader.readLine();
@@ -65,7 +67,7 @@ public class HashTable {
     private static int toInt(String s) {
         return Integer.parseInt(s);
     }
-}
+} // end of HashTable class
 
 /*
  * beecrowd | 1256
