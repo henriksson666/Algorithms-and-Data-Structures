@@ -4,30 +4,30 @@
  * beecrowd | 1257 Array Hash
  */
 
-package array_hash;
+package array_hash; // package declaration is mandatory
 
-import java.util.Scanner;
+import java.util.Scanner; // import Scanner class
 
-public class ArrayHash {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int t = scanner.nextInt();
+public class ArrayHash { // ArrayHash class declaration
+    public static void main(String[] args) { // main method declaration
+        Scanner scanner = new Scanner(System.in); // instantiate Scanner object
+        int t = scanner.nextInt(); // read number of test cases
 
-        for (int i = 0; i < t; i++) {
-            int n = scanner.nextInt();
-            int sum = 0;
-            for (int j = 0; j < n; j++) {
-                String str = scanner.next();
-                int l = str.length();
-                for (int k = 0; k < l; k++) {
-                    sum += str.charAt(k) - 'A' + j + k;
-                }
-            }
-            System.out.println(sum);
+        for (int i = 0; i < t; i++) { // loop through test cases
+            int n = scanner.nextInt(); // read number of lines
+            int sum = 0; // initialize sum
+            for (int j = 0; j < n; j++) { // loop through lines
+                String str = scanner.next(); // read string
+                int l = str.length(); // get string length
+                for (int k = 0; k < l; k++) { // loop through string
+                    sum += str.charAt(k) - 'A' + j + k; // calculate sum
+                } // end of loop through string
+            } // end of loop through lines
+            System.out.println(sum); // print sum
         }
-        scanner.close();
-    }
-}
+        scanner.close(); // close Scanner object
+    } // end of main method
+} // end of ArrayHash class
 
 /*
  * beecrowd | 1257
