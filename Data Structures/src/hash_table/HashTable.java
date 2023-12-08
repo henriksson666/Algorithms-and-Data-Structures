@@ -43,30 +43,30 @@ public class HashTable { // HashTable class declaration
             } // end of if
         } // end of loop through test cases
 
-        outputWriter.close();
+        outputWriter.close(); // close PrintWriter object
     } // end of main method
 
-    private static String readLine() throws IOException {
-        return inputReader.readLine();
-    }
+    private static String readLine() throws IOException { // read line method
+        return inputReader.readLine(); // return line
+    } // end of readLine method
 
-    private static int readInt() throws IOException {
-        return Integer.parseInt(inputReader.readLine());
-    }
+    private static int readInt() throws IOException { // read int method
+        return Integer.parseInt(inputReader.readLine()); // return int
+    } // end of readInt method
 
-    private static int[] readIntArray() throws IOException {
-        String[] line = inputReader.readLine().split("\\s");
-        int length = line.length;
-        int[] array = new int[length];
-        for (int i = 0; i < length; i++) {
-            array[i] = Integer.parseInt(line[i]);
-        }
-        return array;
-    }
+    private static int[] readIntArray() throws IOException { // read int array method
+        String[] line = inputReader.readLine().split("\\s"); // read line
+        int length = line.length; // get line length
+        int[] array = new int[length]; // instantiate int array
+        for (int i = 0; i < length; i++) { // loop through line
+            array[i] = Integer.parseInt(line[i]); // parse line to int
+        } // end of loop through line
+        return array; // return int array
+    } // end of readIntArray method
 
-    private static int toInt(String s) {
-        return Integer.parseInt(s);
-    }
+    private static int toInt(String s) { // to int method
+        return Integer.parseInt(s); // return int
+    } // end of toInt method
 } // end of HashTable class
 
 /*
