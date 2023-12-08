@@ -114,6 +114,33 @@ class Graph { // Class to represent a graph
         } // End of loop
     } // End of kruskalMST method
 
+    // Helper function to find the set of an element in Kruskal's algorithm
+    /**
+     * Find method to find the set of an element in Kruskal's algorithm
+     * @param parent Array of parents
+     * @param i Index of the element
+     * @return 
+     */
+    int find(int[] parent, int i) { // Find method
+        if (parent[i] != i) // If i is not the parent of itself
+            parent[i] = find(parent, parent[i]); // Recursively find the parent of i
+        return parent[i]; // Return the parent of i
+    } // End of find method
+
+    // Helper function to perform union of two sets in Kruskal's algorithm
+    /**
+     * Union method to perform union of two sets in Kruskal's algorithm
+     * @param parent Array of parents
+     * @param x 
+     * @param y
+     * @return 
+     */
+    void union(int[] parent, int x, int y) { // Union method
+        int xRoot = find(parent, x); // Find the set of x
+        int yRoot = find(parent, y); // Find the set of y
+        parent[xRoot] = yRoot; // Make yRoot as parent of xRoot
+    } // End of union method
+
     // Prim's algorithm for Minimum Spanning Tree
     /**
      * Prim's algorithm for Minimum Spanning Tree
@@ -159,34 +186,6 @@ class Graph { // Class to represent a graph
             System.out.println(edge.src + " - " + edge.dest + " : " + edge.weight); // Print the result in the format of "src - dest : weight"
         } // End of loop
     } // End of primMST method
-
-
-    // Helper function to find the set of an element in Kruskal's algorithm
-    /**
-     * Find method to find the set of an element in Kruskal's algorithm
-     * @param parent Array of parents
-     * @param i Index of the element
-     * @return 
-     */
-    int find(int[] parent, int i) { // Find method
-        if (parent[i] != i) // If i is not the parent of itself
-            parent[i] = find(parent, parent[i]); // Recursively find the parent of i
-        return parent[i]; // Return the parent of i
-    } // End of find method
-
-    // Helper function to perform union of two sets in Kruskal's algorithm
-    /**
-     * Union method to perform union of two sets in Kruskal's algorithm
-     * @param parent Array of parents
-     * @param x 
-     * @param y
-     * @return 
-     */
-    void union(int[] parent, int x, int y) { // Union method
-        int xRoot = find(parent, x); // Find the set of x
-        int yRoot = find(parent, y); // Find the set of y
-        parent[xRoot] = yRoot; // Make yRoot as parent of xRoot
-    } // End of union method
 } // End of Graph class
 
 public class MinimumSpanningTree { // Main class
