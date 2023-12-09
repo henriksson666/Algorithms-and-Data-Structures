@@ -4,103 +4,105 @@
  * beecrowd | 1675 Binary Search Heap Construction
  */
 
-package binary_search_heap_construction;
+package binary_search_heap_construction; // package declaration is mandatory
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.io.BufferedWriter; // import BufferedWriter class
+import java.io.IOException; // import IOException class
+import java.io.OutputStreamWriter; // import OutputStreamWriter class
+import java.util.Arrays; // import Arrays class
+import java.util.Comparator; // import Comparator class
+import java.util.Scanner; // import Scanner class
 
-class Node {
-    int index, value, leftChild, rightChild, parent;
-}
+class Node { // Node class declaration
+    int index, value, leftChild, rightChild, parent; // declare index, value, left child, right child and parent
+                                                     // attributes
+} // end of Node class
 
-public class BinarySearchHeapConstruction {
-    static Node[] D = new Node[50005];
-    static String[][] s = new String[50005][105];
+public class BinarySearchHeapConstruction { // BinarySearchHeapConstruction class declaration
+    static Node[] D = new Node[50005]; // declare D array
+    static String[][] s = new String[50005][105]; // declare s array
 
-    static Comparator<Integer> cmp = (a, b) -> s[a][0].compareTo(s[b][0]);
+    static Comparator<Integer> cmp = (a, b) -> s[a][0].compareTo(s[b][0]); // declare cmp comparator
 
-    static void insertCartesianTree(int index, Node[] D) {
-        int p = index - 1;
-        while (D[p].value < D[index].value)
-            p = D[p].parent;
-        D[index].leftChild = D[p].rightChild;
-        D[p].rightChild = index;
-        D[index].parent = p;
-    }
+    static void insertCartesianTree(int index, Node[] D) { // insert cartesian tree method
+        int p = index - 1; // initialize p
+        while (D[p].value < D[index].value) // loop through cartesian tree
+            p = D[p].parent; // change p
+        D[index].leftChild = D[p].rightChild; // change left child
+        D[p].rightChild = index; // change right child
+        D[index].parent = p; // change parent
+    } // end of insert cartesian tree method
 
-    static String dfsPrint(int node, StringBuilder result) {
-        if (node == 0)
-            return "";
-        result.append('(');
-        dfsPrint(D[node].leftChild, result);
-        result.append(String.format("%s/%d", s[D[node].index][0], D[node].value));
-        dfsPrint(D[node].rightChild, result);
-        result.append(')');
+    static String dfsPrint(int node, StringBuilder result) { // dfs print method
+        if (node == 0) // if node is null
+            return ""; // return empty string
+        result.append('('); // append '('
+        dfsPrint(D[node].leftChild, result); // dfs print left child
+        result.append(String.format("%s/%d", s[D[node].index][0], D[node].value)); // append string
+        dfsPrint(D[node].rightChild, result); // dfs print right child
+        result.append(')'); // append ')'
 
-        return result.toString();
-    }
+        return result.toString(); // return result
+    } // end of dfs print method
 
-    static void dfsPrint(int node, BufferedWriter writer) throws IOException {
-        if (node == 0 || D[node] == null)
-            return;
-        writer.write('(');
-        // System.out.print('(');
-        if (D[node].leftChild != 0)
-            dfsPrint(D[node].leftChild, writer);
-        writer.write(String.format("%s/%d", s[D[node].index][0], D[node].value));
-        // System.out.printf("%s/%d", s[D[node].index][0], D[node].value);
-        if (D[node].rightChild != 0)
-            dfsPrint(D[node].rightChild, writer);
-        // System.out.print(')');
-        writer.write(')');
-    }
+    static void dfsPrint(int node, BufferedWriter writer) throws IOException { // dfs print method
+        if (node == 0 || D[node] == null) // if node is null
+            return; // return
+        writer.write('('); // write '('
+        // System.out.print('('); // print '('
+        if (D[node].leftChild != 0) // if left child is not null
+            dfsPrint(D[node].leftChild, writer); // dfs print left child
+        writer.write(String.format("%s/%d", s[D[node].index][0], D[node].value)); // write string
+        // System.out.printf("%s/%d", s[D[node].index][0], D[node].value); // print
+        if (D[node].rightChild != 0) // if right child is not null
+            dfsPrint(D[node].rightChild, writer); // dfs print right child
+        // System.out.print(')'); // print ')'
+        writer.write(')'); // write ')'
+    } // end of dfs print method
 
-    public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
-        int N;
+    public static void main(String[] args) throws IOException { // main method declaration
+        Scanner scanner = new Scanner(System.in); // instantiate Scanner object
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out)); // instantiate BufferedWriter
+                                                                                         // object
+        int N; // declare N
 
-        while ((N = scanner.nextInt()) != 0) {
-            Integer[] x = new Integer[N + 1];
-            Integer[] A = new Integer[N + 1];
+        while ((N = scanner.nextInt()) != 0) { // loop through input
+            Integer[] x = new Integer[N + 1]; // declare x array
+            Integer[] A = new Integer[N + 1]; // declare A array
+ 
+            for (int i = 1; i <= N; i++) { // loop through input
+                s[i] = scanner.next().split("/"); // read string
+                x[i] = Integer.parseInt(s[i][1]); // parse string to int
+                A[i] = i; // initialize A
+            } // end of loop through input
 
-            for (int i = 1; i <= N; i++) {
-                s[i] = scanner.next().split("/");
-                x[i] = Integer.parseInt(s[i][1]);
-                A[i] = i;
-            }
+            Arrays.sort(A, 1, N + 1, cmp); // sort A array
 
-            Arrays.sort(A, 1, N + 1, cmp);
+            D[0] = new Node(); // initialize D
+            D[0].value = Integer.MAX_VALUE; // initialize D
+            D[0].leftChild = D[0].rightChild = D[0].parent = 0; // initialize D
 
-            D[0] = new Node();
-            D[0].value = Integer.MAX_VALUE;
-            D[0].leftChild = D[0].rightChild = D[0].parent = 0;
+            for (int i = 1; i <= N; i++) { // loop through input
+                D[i] = new Node(); // initialize D
+                D[i].leftChild = D[i].rightChild = D[i].parent = 0; // initialize D
+                D[i].value = x[A[i]]; // initialize D
+                D[i].index = A[i]; // initialize D
+            } // end of loop through input
 
-            for (int i = 1; i <= N; i++) {
-                D[i] = new Node();
-                D[i].leftChild = D[i].rightChild = D[i].parent = 0;
-                D[i].value = x[A[i]];
-                D[i].index = A[i];
-            }
+            for (int i = 1; i <= N; i++) { // loop through input
+                insertCartesianTree(i, D); // insert cartesian tree
+            } // end of loop through input
 
-            for (int i = 1; i <= N; i++) {
-                insertCartesianTree(i, D);
-            }
-
-            // dfsPrint(D[0].rightChild, writer);
-            writer.write(dfsPrint(D[0].rightChild, new StringBuilder()));
-            writer.newLine();
-            writer.flush();
-            // System.out.println();
+            // dfsPrint(D[0].rightChild, writer); // dfs print
+            writer.write(dfsPrint(D[0].rightChild, new StringBuilder())); // dfs print
+            writer.newLine(); // write new line
+            writer.flush(); // flush writer
+            // System.out.println(); // print new line
         }
-        writer.close();
-        scanner.close();
-    }
-}
+        writer.close(); // close writer
+        scanner.close(); // close Scanner object
+    } // end of main method
+} // end of BinarySearchHeapConstruction class
 
 /*
  * beecrowd | 1675
