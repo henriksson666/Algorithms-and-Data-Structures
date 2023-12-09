@@ -130,7 +130,7 @@ class Graph { // Class to represent a graph
         PriorityQueue<Edge> minHeap = new PriorityQueue<>(Comparator.comparingInt(e -> e.weight)); // Create a min heap to store the edges
         boolean[] inMST = new boolean[V]; // Store the vertices in the MST
         ArrayList<Edge> result = new ArrayList<>(); // Store the result
-        int startVertex = 2; // Start vertex is 0
+        int startVertex = 0; // Start vertex is 0
         inMST[startVertex] = true; // Add the start vertex to the MST
 
         for (Edge edge : edges) { // Loop through the edges
@@ -164,7 +164,6 @@ class Graph { // Class to represent a graph
         } // End of loop
     } // End of primMST method
 } // End of Graph class
-
 public class MinimumSpanningTree { // Main class
     
     public static void main(String[] args) { // Main method
