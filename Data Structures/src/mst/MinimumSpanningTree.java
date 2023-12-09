@@ -81,10 +81,6 @@ class Graph { // Class to represent a graph
         edges.add(new Edge(src, dest, weight)); // Add an edge to the graph
     } // End of addEdge method
 
-    // Kruskal's algorithm for Minimum Spanning Tree
-    /**
-     * Kruskal's algorithm for Minimum Spanning Tree
-     */
     void kruskalMST() { // Kruskal's algorithm
         Collections.sort(edges, Comparator.comparingInt(e -> e.weight)); // Sort the edges by weight in ascending order
 
@@ -114,27 +110,12 @@ class Graph { // Class to represent a graph
         } // End of loop
     } // End of kruskalMST method
 
-    // Helper function to find the set of an element in Kruskal's algorithm
-    /**
-     * Find method to find the set of an element in Kruskal's algorithm
-     * @param parent Array of parents
-     * @param i Index of the element
-     * @return 
-     */
     int find(int[] parent, int i) { // Find method
         if (parent[i] != i) // If i is not the parent of itself
             parent[i] = find(parent, parent[i]); // Recursively find the parent of i
         return parent[i]; // Return the parent of i
     } // End of find method
 
-    // Helper function to perform union of two sets in Kruskal's algorithm
-    /**
-     * Union method to perform union of two sets in Kruskal's algorithm
-     * @param parent Array of parents
-     * @param x 
-     * @param y
-     * @return 
-     */
     void union(int[] parent, int x, int y) { // Union method
         int xRoot = find(parent, x); // Find the set of x
         int yRoot = find(parent, y); // Find the set of y
@@ -147,17 +128,14 @@ class Graph { // Class to represent a graph
      */
     void primMST() { // Prim's algorithm
         PriorityQueue<Edge> minHeap = new PriorityQueue<>(Comparator.comparingInt(e -> e.weight)); // Create a min heap to store the edges
-
         boolean[] inMST = new boolean[V]; // Store the vertices in the MST
         ArrayList<Edge> result = new ArrayList<>(); // Store the result
-
-        int startVertex = 0; // Start vertex is 0
+        int startVertex = 2; // Start vertex is 0
         inMST[startVertex] = true; // Add the start vertex to the MST
 
         for (Edge edge : edges) { // Loop through the edges
-            if (edge.src == startVertex) { // If the source vertex is the start vertex
+            if (edge.src == startVertex)// If the source vertex is the start vertex
                 minHeap.add(edge); // Add the edge to the heap
-            } // End of if statement
         } // End of loop
 
         while (result.size() < V - 1) { // Loop until we find V-1 edges
@@ -173,9 +151,8 @@ class Graph { // Class to represent a graph
                 result.add(minEdge); // Add the edge to the result
 
                 for (Edge edge : edges) { // Loop through the edges
-                    if (edge.src == minEdge.dest && !inMST[edge.dest]) { // If the source vertex is the destination vertex of the minimum edge and the destination vertex is not in the MST
+                    if (edge.src == minEdge.dest && !inMST[edge.dest]) // If the source vertex is the destination vertex of the minimum edge and the destination vertex is not in the MST
                         minHeap.add(edge); // Add the edge to the heap
-                    } // End of if statement
                 } // End of loop
             } // End of if statement
         } // End of while loop
@@ -189,10 +166,7 @@ class Graph { // Class to represent a graph
 } // End of Graph class
 
 public class MinimumSpanningTree { // Main class
-    /**
-     * Main method
-     * @param args Command line arguments
-     */
+    
     public static void main(String[] args) { // Main method
         int V = 5; // Number of vertices
         int E = 5; // Number of edges
