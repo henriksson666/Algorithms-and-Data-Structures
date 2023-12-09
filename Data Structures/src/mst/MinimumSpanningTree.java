@@ -32,7 +32,8 @@
  * quando o número de arestas na AGM é igual ao número de vértices menos 1. 
  *******************************************************************************************/
 
-package mst;
+package mst; // Package declaration is mandatory
+
 // Import packages
 import java.util.ArrayList;
 import java.util.Collections;
@@ -81,6 +82,10 @@ class Graph { // Class to represent a graph
         edges.add(new Edge(src, dest, weight)); // Add an edge to the graph
     } // End of addEdge method
 
+    // Kruskal's algorithm for Minimum Spanning Tree
+    /**
+     * Kruskal's algorithm for Minimum Spanning Tree
+     */
     void kruskalMST() { // Kruskal's algorithm
         Collections.sort(edges, Comparator.comparingInt(e -> e.weight)); // Sort the edges by weight in ascending order
 
@@ -110,62 +115,73 @@ class Graph { // Class to represent a graph
         } // End of loop
     } // End of kruskalMST method
 
+    // Helper function to find the set of an element in Kruskal's algorithm
+    /**
+     * Find method to find the set of an element in Kruskal's algorithm
+     * @param parent Array of parents
+     * @param i Index of the element
+     * @return 
+     */
     int find(int[] parent, int i) { // Find method
         if (parent[i] != i) // If i is not the parent of itself
             parent[i] = find(parent, parent[i]); // Recursively find the parent of i
         return parent[i]; // Return the parent of i
     } // End of find method
 
+    // Helper function to perform union of two sets in Kruskal's algorithm
+    /**
+     * Union method to perform union of two sets in Kruskal's algorithm
+     * @param parent Array of parents
+     * @param x 
+     * @param y
+     * @return 
+     */
     void union(int[] parent, int x, int y) { // Union method
         int xRoot = find(parent, x); // Find the set of x
         int yRoot = find(parent, y); // Find the set of y
         parent[xRoot] = yRoot; // Make yRoot as parent of xRoot
     } // End of union method
 
-    // Prim's algorithm for Minimum Spanning Tree
     /**
      * Prim's algorithm for Minimum Spanning Tree
+     * @param startVertex Starting vertex
      */
-    void primMST() { // Prim's algorithm
-        PriorityQueue<Edge> minHeap = new PriorityQueue<>(Comparator.comparingInt(e -> e.weight)); // Create a min heap to store the edges
-        boolean[] inMST = new boolean[V]; // Store the vertices in the MST
+    void primMST(int startVertex) { // Prim's algorithm
+        PriorityQueue<Edge> minHeap = new PriorityQueue<>(Comparator.comparingInt(e -> e.weight)); // Create a min heap of edges
+        boolean[] inMST = new boolean[V]; // Create an array to store the vertices in the MST
         ArrayList<Edge> result = new ArrayList<>(); // Store the result
-        int startVertex = 0; // Start vertex is 0
-        inMST[startVertex] = true; // Add the start vertex to the MST
-
-        for (Edge edge : edges) { // Loop through the edges
-            if (edge.src == startVertex)// If the source vertex is the start vertex
-                minHeap.add(edge); // Add the edge to the heap
-        } // End of loop
+        inMST[startVertex] = true; // Add the starting vertex to the MST
 
         while (result.size() < V - 1) { // Loop until we find V-1 edges
-            if (minHeap.isEmpty()) { // If the heap is empty, then the graph is not connected
-                System.out.println("The graph is not connected."); // Print the result
-                return; // Return
-            } // End of if statement
+            for (Edge edge : edges) { // Loop through the edges
+                if ((inMST[edge.src] && !inMST[edge.dest]) || (inMST[edge.dest] && !inMST[edge.src])) // If the edge connects a vertex in the MST and a vertex outside the MST
+                    minHeap.add(edge); // Add the edge to the min heap
+            } // End of loop
 
             Edge minEdge = minHeap.poll(); // Get the edge with the minimum weight
 
-            if (!inMST[minEdge.dest]) { // If the destination vertex is not in the MST
-                inMST[minEdge.dest] = true; // Add the destination vertex to the MST
-                result.add(minEdge); // Add the edge to the result
-
-                for (Edge edge : edges) { // Loop through the edges
-                    if (edge.src == minEdge.dest && !inMST[edge.dest]) // If the source vertex is the destination vertex of the minimum edge and the destination vertex is not in the MST
-                        minHeap.add(edge); // Add the edge to the heap
-                } // End of loop
+            if (minEdge == null) { // If minEdge is null
+                System.out.println("Error: Graph is not connected."); // Print error message
+                return; // Return to the caller
             } // End of if statement
+
+            int newVertex = inMST[minEdge.src] ? minEdge.dest : minEdge.src; // Get the new vertex
+            inMST[newVertex] = true; // Add the new vertex to the MST
+            result.add(minEdge); // Add the edge to the result
         } // End of while loop
 
         // Print the result
         System.out.println("\nPrim's Minimum Spanning Tree:"); // Print the result
-        for (Edge edge : result) { // Loop through the result
+        for (Edge edge : result) // Loop through the result
             System.out.println(edge.src + " - " + edge.dest + " : " + edge.weight); // Print the result in the format of "src - dest : weight"
-        } // End of loop
     } // End of primMST method
 } // End of Graph class
+
 public class MinimumSpanningTree { // Main class
-    
+    /**
+     * Main method
+     * @param args Command line arguments
+     */
     public static void main(String[] args) { // Main method
         int V = 5; // Number of vertices
         int E = 5; // Number of edges
@@ -181,8 +197,8 @@ public class MinimumSpanningTree { // Main class
 
         // Kruskal's Minimum Spanning Tree
         graph.kruskalMST(); // Print the result of Kruskal's algorithm
-
+        int startVertex = 4;
         // Prim's Minimum Spanning Tree
-        graph.primMST(); // Print the result of Prim's algorithm
+        graph.primMST(startVertex); // Print the result of Prim's algorithm
     } // End of Main method
 } // End of Main class
