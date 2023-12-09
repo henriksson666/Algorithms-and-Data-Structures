@@ -4,73 +4,75 @@
  * beecrowd | 1912 Help Seu Madruga
  */
 
-package help_seu_madruga;
+package help_seu_madruga; // package declaration is mandatory
 
-import java.util.Scanner;
+import java.util.Scanner; // import Scanner class
 
-public class HelpSeuMadruga {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        while (scanner.hasNextInt()) {
-            int numberPeople = scanner.nextInt();
-            int desiredHeight = scanner.nextInt();
-            if (numberPeople + desiredHeight == 0) {
-                break;
-            }
+public class HelpSeuMadruga { // HelpSeuMadruga class declaration
+    public static void main(String[] args) { // main method declaration
+        Scanner scanner = new Scanner(System.in); // instantiate Scanner object
+        while (scanner.hasNextInt()) { // loop through input
+            int numberStrip = scanner.nextInt(); // read number of strips
+            int desiredHeight = scanner.nextInt(); // read desired height
+            if (numberStrip + desiredHeight == 0) { // if it is the last test case
+                break; // break loop
+            } // end of if
 
-            int[] personHeights = new int[numberPeople];
-            int totalHeight = 0;
-            for (int i = 0; i < numberPeople; i++) {
-                personHeights[i] = scanner.nextInt();
-                totalHeight += personHeights[i];
-            }
+            int[] stripHeights = new int[numberStrip]; // instantiate strip heights array
+            int totalHeight = 0; // instantiate total height
+            for (int i = 0; i < numberStrip; i++) {
+                stripHeights[i] = scanner.nextInt(); // read strip height
+                totalHeight += stripHeights[i]; // add strip height to total height
+            } // end of loop through strip heights
 
-            if (totalHeight < desiredHeight) {
-                System.out.println("-.-");
-                continue;
-            } else if (totalHeight == desiredHeight) {
-                System.out.println(":D");
-                continue;
-            }
+            if (totalHeight < desiredHeight) { // if it is impossible
+                System.out.println("-.-"); // print result
+                continue; // continue loop
+            } else if (totalHeight == desiredHeight) { // if it is not necessary to cut
+                System.out.println(":D"); // print result
+                continue; // continue loop
+            } // end of if
 
-            boolean isPossible = false;
-            double left = 0.0;
-            double right = 100001.0;
-            double currentHeight = (left + right) / 2.0;
-            double error = 0.0001;
+            boolean isPossible = false; // instantiate is possible
+            double left = 0.0; // instantiate left
+            double right = 100001.0; // instantiate right
+            double currentHeight = (left + right) / 2.0; // instantiate current height
+            double error = 0.0001; // instantiate error
 
-            while (right - left > 0.000001) {
-                double currentTotal = 0.0;
-                for (int i = 0; i < numberPeople; i++) {
-                    if (personHeights[i] > currentHeight) {
-                        currentTotal += (personHeights[i] - currentHeight);
-                    }
-                }
+            while (right - left > 0.000001) { // loop through binary search
+                double currentTotal = 0.0; // instantiate current total
+                for (int i = 0; i < numberStrip; i++) { // loop through strip heights
+                    if (stripHeights[i] > currentHeight) { // if it is necessary to cut
+                        currentTotal += (stripHeights[i] - currentHeight); // add cut height to current total
+                    } // end of if
+                } // end of loop through strip heights
 
-                if (Math.abs(currentTotal - desiredHeight) < error) {
-                    System.out.printf("%.4f\n", currentHeight);
-                    isPossible = true;
-                    break;
-                }
-                if (currentTotal < desiredHeight) {
-                    right = currentHeight;
-                    currentHeight = (right + left) / 2.0;
-                }
-                if (currentTotal > desiredHeight) {
-                    left = currentHeight;
-                    currentHeight = (right + left) / 2.0;
-                }
-            }
+                if (Math.abs(currentTotal - desiredHeight) < error) { // if it is possible
+                    System.out.printf("%.4f\n", currentHeight); // print result
+                    isPossible = true; // change is possible
+                    break; // break loop
+                } // end of if
 
-            if (isPossible) {
-                continue;
-            }
-            System.out.printf("%.4f\n", currentHeight);
+                if (currentTotal < desiredHeight) { // if it is possible
+                    right = currentHeight; // change right
+                    currentHeight = (right + left) / 2.0; // change current height
+                } // end of if
+                
+                if (currentTotal > desiredHeight) { // if it is not possible
+                    left = currentHeight; // change left
+                    currentHeight = (right + left) / 2.0; // change current height
+                } // end of if
+            } // end of loop through binary search
+
+            if (isPossible) { // if it is possible
+                continue; // continue loop
+            } // end of if
+            System.out.printf("%.4f\n", currentHeight); // print result
         }
 
-        scanner.close();
-    }
-}
+        scanner.close(); // close Scanner object
+    } // end of main method
+} // end of HelpSeuMadruga class
 
 /*
  * beecrowd | 1912
