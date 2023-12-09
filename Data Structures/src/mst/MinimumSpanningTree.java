@@ -197,7 +197,8 @@ public class MinimumSpanningTree { // Main class
 
         // Kruskal's Minimum Spanning Tree
         graph.kruskalMST(); // Print the result of Kruskal's algorithm
-        int startVertex = 4;
+
+        int startVertex = 4; // Starting vertex for Prim's algorithm
         // Prim's Minimum Spanning Tree
         graph.primMST(startVertex); // Print the result of Prim's algorithm
     } // End of Main method
