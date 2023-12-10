@@ -82,7 +82,7 @@ public class RedBlackTree {
                     z.parent.parent.color = Color.RED;
                     z = z.parent.parent;
                 } else {
-                    if (z == z.parent.right) {
+                    if (z == z.parent.right && z.parent != null) {
                         z = z.parent;
                         leftRotate(z);
                     }
@@ -102,7 +102,7 @@ public class RedBlackTree {
                     z.parent.parent.color = Color.RED;
                     z = z.parent.parent;
                 } else {
-                    if (z == z.parent.left) {
+                    if (z == z.parent.left && z.parent != null) {
                         z = z.parent;
                         rightRotate(z);
                     }
@@ -116,7 +116,8 @@ public class RedBlackTree {
                 }
             }
         }
-        root.color = Color.BLACK;
+        if (root != null)
+            root.color = Color.BLACK;
     }    
 
     public void insert(int key) {
@@ -147,11 +148,11 @@ public class RedBlackTree {
         node.color = Color.RED;
 
         fixInsert(node);
-        printInsertModifications(node);
+        //printInsertModifications(node);
         printTree();
     }
 
-    private void printInsertModifications(Node node) {
+    /* private void printInsertModifications(Node node) {
         System.out.println("\nModifications during Insertion:");
         System.out.println("Inserted node: " + node.data);
         System.out.println("Color of node " + node.data + ": " + (node.color == Color.RED ? "RED" : "BLACK"));
@@ -165,78 +166,91 @@ public class RedBlackTree {
             System.out.println("Grandparent of node " + node.data + ": " + node.parent.parent.data);
             System.out.println("Color of grandparent " + node.parent.parent.data + ": " + (node.parent.parent.color == Color.RED ? "RED" : "BLACK"));
         }
-    }
+    } */
 
     private Node minimum(Node x) {
-        while (x.left != nil) {
+        while (x != null && x.left != nil) {
             x = x.left;
         }
 
         return x;
     }
 
-    /* private Node maximum(Node x) {
-        while (x.right != nil) {
+    private Node maximum(Node x) {
+        while (x != null && x.right != nil) {
             x = x.right;
         }
 
         return x;
-    } */
+    }
 
     private void fixDelete(Node x) {
         while (x != root && x.color == Color.BLACK) {
             if (x == x.parent.left) {
                 Node w = x.parent.right;
-                if (w.color == Color.RED) {
-                    w.color = Color.BLACK;
-                    x.parent.color = Color.RED;
-                    leftRotate(x.parent);
-                    w = x.parent.right;
-                }
-                if (w.left.color == Color.BLACK && w.right.color == Color.BLACK) {
-                    w.color = Color.RED;
-                    x = x.parent;
-                } else {
-                    if (w.right.color == Color.BLACK) {
-                        w.left.color = Color.BLACK;
-                        w.color = Color.RED;
-                        rightRotate(w);
+                if (w != null) {
+                    if (w.color == Color.RED) {
+                        w.color = Color.BLACK;
+                        x.parent.color = Color.RED;
+                        leftRotate(x.parent);
                         w = x.parent.right;
                     }
-                    w.color = x.parent.color;
-                    x.parent.color = Color.BLACK;
-                    w.right.color = Color.BLACK;
-                    leftRotate(x.parent);
-                    x = root;
+                    if (w.left != null && w.right != null && w.left.color == Color.BLACK && w.right.color == Color.BLACK) {
+                        w.color = Color.RED;
+                        x = x.parent;
+                    } else {
+                        if (w.right != null && w.right.color == Color.BLACK) {
+                            w.left.color = Color.BLACK;
+                            w.color = Color.RED;
+                            rightRotate(w);
+                            w = x.parent.right;
+                        }
+                        if (w.right != null) {
+                            w.color = x.parent.color;
+                            x.parent.color = Color.BLACK;
+                            if (w.right != null) {
+                                w.right.color = Color.BLACK;
+                            }
+                            leftRotate(x.parent);
+                            x = root;
+                        }
+                    }
                 }
             } else {
                 Node w = x.parent.left;
-                if (w.color == Color.RED) {
-                    w.color = Color.BLACK;
-                    x.parent.color = Color.RED;
-                    rightRotate(x.parent);
-                    w = x.parent.left;
-                }
-                if (w.right.color == Color.BLACK && w.left.color == Color.BLACK) {
-                    w.color = Color.RED;
-                    x = x.parent;
-                } else {
-                    if (w.left.color == Color.BLACK) {
-                        w.right.color = Color.BLACK;
-                        w.color = Color.RED;
-                        leftRotate(w);
+                if (w != null) {    
+                    if (w.color == Color.RED) {
+                        w.color = Color.BLACK;
+                        x.parent.color = Color.RED;
+                        rightRotate(x.parent);
                         w = x.parent.left;
                     }
-                    w.color = x.parent.color;
-                    x.parent.color = Color.BLACK;
-                    w.left.color = Color.BLACK;
-                    rightRotate(x.parent);
-                    x = root;
+                    if (w.right.color == Color.BLACK && w.left.color == Color.BLACK) {
+                        w.color = Color.RED;
+                        x = x.parent;
+                    } else {
+                        if (w.left != null && w.left.color == Color.BLACK) {
+                            w.right.color = Color.BLACK;
+                            w.color = Color.RED;
+                            leftRotate(w);
+                            w = x.parent.left;
+                        }
+                        if(w != null) {
+                            w.color = x.parent.color;
+                            x.parent.color = Color.BLACK;
+                            if (w.left != null) {
+                                w.left.color = Color.BLACK;
+                            }
+                            rightRotate(x.parent);
+                            x = root;
+                        }
+                    }
                 }
             }
         }
 
-        x.color = Color.BLACK;
+        if (x != null)
+            x.color = Color.BLACK;
     }
 
     private void transplant(Node u, Node v) {
@@ -271,9 +285,9 @@ public class RedBlackTree {
             transplant(z, z.left);
         } else {
             y = minimum(z.right);
-            //y = minimum(z.left);
+            //y = minimum(z.right);
+            //y = maximum(z.left);
             originalColor = y.color;
-            //x = y.right;
             x = y.left;
 
             if (y.parent == z) {
@@ -290,7 +304,7 @@ public class RedBlackTree {
             y.color = z.color;
         }
 
-        printDeleteModifications(z, originalColor, x, y);
+        //printDeleteModifications(z, originalColor, x, y);
         if (originalColor == Color.BLACK) {
             fixDelete(x);
         }
@@ -298,7 +312,7 @@ public class RedBlackTree {
         printTree();
     }
 
-    private void printDeleteModifications(Node z, Color originalColor, Node x, Node y) {
+    /* private void printDeleteModifications(Node z, Color originalColor, Node x, Node y) {
         System.out.println("\nModifications during Deletion:");
         System.out.println("Deleted node: " + z.data);
         if (originalColor == Color.RED) {
@@ -324,7 +338,7 @@ public class RedBlackTree {
                 System.out.println("Performed right rotation at node " + y.parent.parent.data);
             }
         }
-    }
+    } */
     
 
     /* private void printDeleteModifications(Node z, Color originalColor, Node x) {
