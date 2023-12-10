@@ -118,7 +118,7 @@ public class RedBlackTree {
         }
         if (root != null)
             root.color = Color.BLACK;
-    }    
+    }
 
     public void insert(int key) {
         Node node = new Node(key);
@@ -148,25 +148,8 @@ public class RedBlackTree {
         node.color = Color.RED;
 
         fixInsert(node);
-        //printInsertModifications(node);
         printTree();
     }
-
-    /* private void printInsertModifications(Node node) {
-        System.out.println("\nModifications during Insertion:");
-        System.out.println("Inserted node: " + node.data);
-        System.out.println("Color of node " + node.data + ": " + (node.color == Color.RED ? "RED" : "BLACK"));
-
-        if (node.parent != null) {
-            System.out.println("Parent of node " + node.data + ": " + node.parent.data);
-            System.out.println("Color of parent " + node.parent.data + ": " + (node.parent.color == Color.RED ? "RED" : "BLACK"));
-        }
-
-        if (node.parent != null && node.parent.parent != null) {
-            System.out.println("Grandparent of node " + node.data + ": " + node.parent.parent.data);
-            System.out.println("Color of grandparent " + node.parent.parent.data + ": " + (node.parent.parent.color == Color.RED ? "RED" : "BLACK"));
-        }
-    } */
 
     private Node minimum(Node x) {
         while (x != null && x.left != nil) {
@@ -195,7 +178,8 @@ public class RedBlackTree {
                         leftRotate(x.parent);
                         w = x.parent.right;
                     }
-                    if (w.left != null && w.right != null && w.left.color == Color.BLACK && w.right.color == Color.BLACK) {
+                    if (w.left != null && w.right != null && w.left.color == Color.BLACK
+                            && w.right.color == Color.BLACK) {
                         w.color = Color.RED;
                         x = x.parent;
                     } else {
@@ -218,7 +202,7 @@ public class RedBlackTree {
                 }
             } else {
                 Node w = x.parent.left;
-                if (w != null) {    
+                if (w != null) {
                     if (w.color == Color.RED) {
                         w.color = Color.BLACK;
                         x.parent.color = Color.RED;
@@ -235,7 +219,7 @@ public class RedBlackTree {
                             leftRotate(w);
                             w = x.parent.left;
                         }
-                        if(w != null) {
+                        if (w != null) {
                             w.color = x.parent.color;
                             x.parent.color = Color.BLACK;
                             if (w.left != null) {
@@ -285,8 +269,8 @@ public class RedBlackTree {
             transplant(z, z.left);
         } else {
             y = minimum(z.right);
-            //y = minimum(z.right);
-            //y = maximum(z.left);
+            // y = minimum(z.right);
+            // y = maximum(z.left);
             originalColor = y.color;
             x = y.left;
 
@@ -304,70 +288,12 @@ public class RedBlackTree {
             y.color = z.color;
         }
 
-        //printDeleteModifications(z, originalColor, x, y);
         if (originalColor == Color.BLACK) {
             fixDelete(x);
         }
 
         printTree();
     }
-
-    /* private void printDeleteModifications(Node z, Color originalColor, Node x, Node y) {
-        System.out.println("\nModifications during Deletion:");
-        System.out.println("Deleted node: " + z.data);
-        if (originalColor == Color.RED) {
-            System.out.println("Color of deleted node " + z.data + ": RED");
-        } else {
-            System.out.println("Color of deleted node " + z.data + ": BLACK");
-            if (y != null) {
-                System.out.println("Replaced node " + z.data + " with node " + x.data);
-            }
-        }
-        if (y != null) {
-            System.out.println("Color of replacement node " + x.data + ": " + (x.color == Color.RED ? "RED" : "BLACK"));
-        }
-        if (y != null && y.parent != null) {
-            System.out.println("Parent of replacement node " + y.data + ": " + y.parent.data);
-            System.out.println("Color of parent " + y.parent.data + ": " + (y.parent.color == Color.RED ? "RED" : "BLACK"));
-        }
-        if (y != null && y.parent != null && y.parent.parent != null) {
-            System.out.println("Grandparent of replacement node " + y.data + ": " + y.parent.parent.data);
-            if (y.parent == y.parent.parent.right) {
-                System.out.println("Performed left rotation at node " + y.parent.parent.data);
-            } else {
-                System.out.println("Performed right rotation at node " + y.parent.parent.data);
-            }
-        }
-    } */
-    
-
-    /* private void printDeleteModifications(Node z, Color originalColor, Node x) {
-        System.out.println("\nModifications during Deletion:");
-        System.out.println("Deleted node: " + z.data);
-        if (originalColor == Color.RED) {
-            System.out.println("Color of deleted node " + z.data + ": RED");
-        } else {
-            System.out.println("Color of deleted node " + z.data + ": BLACK");
-            if (x != null) {
-                System.out.println("Replaced node " + z.data + " with node " + x.data);
-            }
-        }
-        if (x != null) {
-            System.out.println("Color of replacement node " + x.data + ": " + (x.color == Color.RED ? "RED" : "BLACK"));
-        }
-        if (z.parent != null) {
-            System.out.println("Parent of deleted node " + z.data + ": " + z.parent.data);
-            System.out.println("Color of parent " + z.parent.data + ": " + (z.parent.color == Color.RED ? "RED" : "BLACK"));
-        }
-        if (z.parent != null && z.parent.parent != null) {
-            System.out.println("Grandparent of deleted node " + z.data + ": " + z.parent.parent.data);
-            if (z.parent == z.parent.parent.right) {
-                System.out.println("Performed left rotation at node " + z.parent.parent.data);
-            } else {
-                System.out.println("Performed right rotation at node " + z.parent.parent.data);
-            }
-        }
-    } */
 
     public Node search(int key) {
 
