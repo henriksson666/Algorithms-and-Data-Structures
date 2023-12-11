@@ -395,7 +395,8 @@ public class RedBlackTree { // class for the Red-Black Tree
             x = z.left; // x becomes z's left child
             transplant(z, z.left); // transplant z with z's left child
         } else { // if z has two children
-            y = minimum(z.right); // y is the minimum node of z's right subtree
+            //y = minimum(z.right); // y is the minimum node of z's right subtree
+            y = minimum(z.left);
             originalColor = y.color; // originalColor is y's color
             x = y.left; // x is y's left child
 

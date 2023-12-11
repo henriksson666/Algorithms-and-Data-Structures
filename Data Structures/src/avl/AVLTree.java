@@ -37,7 +37,7 @@ import java.util.Scanner; // Import the Scanner class to read user input
 class Node { // Node class
     int key, height; // Node attributes
     Node left, right; // Node children
-
+    
     Node(int value) { // Node constructor
         key = value; // The key is the value of the node
         height = 1; // The height of a new node is 1
