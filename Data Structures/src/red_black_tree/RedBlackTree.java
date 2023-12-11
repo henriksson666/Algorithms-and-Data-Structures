@@ -293,16 +293,18 @@ public class RedBlackTree { // class for the Red-Black Tree
                             w = x.parent.right; // w becomes x's sibling
                         } // end if
                         if (w.right != null) { // if w's right child is not null
-                            w.color = x.parent.color; // w's color becomes x's parent's color
-                            x.parent.color = Color.BLACK; // x's parent's color becomes black
-                            if (w.right != null) { // if w's right child is not null
-                                w.right.color = Color.BLACK; // w's right child's color becomes black
+                            if (w.right.color == Color.RED) { // if w's right child's color is red
+                                w.color = x.parent.color; // w's color becomes x's parent's color
+                                x.parent.color = Color.BLACK; // x's parent's color becomes black
+                                if (w.right != null) { // if w's right child is not null
+                                    w.right.color = Color.BLACK; // w's right child's color becomes black
+                                } // end if
+                                leftRotate(x.parent); // left rotate x's parent
+                                System.out.println("Left Rotate: " + x.parent.data + " -> " + w.data); // print left rotate
+                                System.out
+                                        .println("Changing colors: " + x.parent.data + " (BLACK) <- " + w.data + " (RED)"); // print changing colors
+                                x = root; // x becomes the root
                             } // end if
-                            leftRotate(x.parent); // left rotate x's parent
-                            System.out.println("Left Rotate: " + x.parent.data + " -> " + w.data); // print left rotate
-                            System.out
-                                    .println("Changing colors: " + x.parent.data + " (BLACK) <- " + w.data + " (RED)"); // print changing colors
-                            x = root; // x becomes the root
                         } // end if
                     } // end if
                 } // end if
