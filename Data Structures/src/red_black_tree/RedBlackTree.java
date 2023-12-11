@@ -243,7 +243,7 @@ public class RedBlackTree { // class for the Red-Black Tree
      * @return the minimum node
      */
     private Node minimum(Node x) { // minimum method
-        while (x != null && x.left != nil) { // while x is not null and x's left child is not nil
+        while (x != null && x.right != nil) { // while x is not null and x's left child is not nil
             x = x.left; // x becomes the left child of x
         } // end while
 
@@ -318,7 +318,17 @@ public class RedBlackTree { // class for the Red-Black Tree
                         System.out.println("Right Rotate: " + x.parent.data + " -> " + x.parent.left.data); // print right rotate
                         w = x.parent.left; // w becomes x's sibling
                     } // end if
-                    if (w.right.color == Color.BLACK && w.left.color == Color.BLACK) { // if w's right child and w's left child are black
+
+                    if (w.left != null && w.left.color == Color.RED) { // if w's left child is red
+                        w.left.color = Color.BLACK; // w's left child's color becomes black
+                        w.color = Color.RED; // w's color becomes red
+                        leftRotate(w); // left rotate w
+                        System.out.println("Left Rotate: " + w.data + " -> " + w.left.data); // print left rotate
+                        w = x.parent.left; // w becomes x's sibling
+                    } // end if
+
+                    if (w.right != null && w.right.color == Color.BLACK && w.left != null && w.left.color == Color.BLACK) {
+                    //if (w.right.color == Color.BLACK && w.left.color == Color.BLACK) { // if w's right child and w's left child are black
                         w.color = Color.RED; // w's color becomes red
                         System.out.println("Changing color: " + w.data + " (RED)"); // print changing color
                         x = x.parent; // x becomes x's parent
@@ -399,7 +409,7 @@ public class RedBlackTree { // class for the Red-Black Tree
         } else { // if z has two children
             y = minimum(z.right); // y is the minimum node of z's right subtree
             originalColor = y.color; // originalColor is y's color
-            x = y.left; // x is y's left child
+            x = y.right; // x is y's left child
 
             if (y.parent == z) { // if y's parent is z
                 x.parent = y; // y becomes x's parent
